@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shaoxing 5-Day Weather Forecast</title>
+    <title>Shaoxing 5-Day Weather</title>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f1f8f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
         .weather { text-align: center; padding: 20px; background-color: #ffffff; border-radius: 8px; max-width: 300px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
@@ -30,21 +30,17 @@
                 const response = await fetch(url);
                 const data = await response.json();
 
-                // Filter out the data for each day at 09:00 AM
                 const dailyForecasts = data.list.filter(forecast => forecast.dt_txt.includes(“09:00:00"));
 
-                // Clear the loading message
                 const forecastContainer = document.getElementById('forecast');
                 forecastContainer.innerHTML = "";
 
-                // Limit to the next 5 days
                 dailyForecasts.slice(0, 5).forEach(day => {
                     const date = new Date(day.dt * 1000).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
                     const temperature = `${day.main.temp.toFixed(1)} °C`;
                     const descriptionEn = day.weather[0].main;
                     const descriptionZh = day.weather[0].description;
 
-                    // Create HTML content
                     const dayDiv = document.createElement('div');
                     dayDiv.classList.add('day');
                     dayDiv.innerHTML = `
